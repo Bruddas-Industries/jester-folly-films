@@ -246,6 +246,12 @@ async function main() {
 
   merged.sort((a, b) => (b.published || "").localeCompare(a.published || ""));
 
+  // Skip the write when nothing changed, so local builds don't dirty git.
+  if (existing && JSON.stringify(existing.videos) === JSON.stringify(merged)) {
+    log(`no changes (${merged.length} videos)`);
+    return;
+  }
+
   await mkdir(dirname(OUT_FILE), { recursive: true });
   await writeFile(
     OUT_FILE,
