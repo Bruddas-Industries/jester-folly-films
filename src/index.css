@@ -210,24 +210,38 @@ html.lenis body {
   opacity: 0;
 }
 
-/* Horizontal scrollers */
-.scroller {
-  /* Align the first card with the page container (max-w-7xl + gutter) */
-  --gutter: 1rem;
-  padding-inline: var(--gutter);
-  scroll-padding-inline: var(--gutter);
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-velvet-raised) transparent;
-  overscroll-behavior-x: contain;
-}
-.scroller > * {
-  scroll-snap-align: start;
-}
-@media (min-width: 40rem) {
+/* Horizontal scrollers (layered so Tailwind utilities can override them) */
+@layer components {
   .scroller {
-    --gutter: max(2rem, calc((100% - 80rem) / 2 + 2rem));
+    /* Align the first card with the page container (max-w-7xl + gutter) */
+    --gutter: 1rem;
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-velvet-raised) transparent;
+    overscroll-behavior-x: contain;
   }
+  .scroller > * {
+    scroll-snap-align: start;
+  }
+  @media (min-width: 40rem) {
+    .scroller {
+      --gutter: max(2rem, calc((100% - 80rem) / 2 + 2rem));
+    }
+  }
+}
+
+/* Posters lift one frame on hover */
+.poster-lift > div,
+.poster-lift > button > div {
+  transition: transform 160ms steps(2);
+}
+.poster-lift:hover > div,
+.poster-lift:hover > div:first-child,
+button.poster-lift:hover > div,
+button.poster-lift:focus-visible > div {
+  transform: translateY(-6px);
 }
 
 /* Custom cursor hides the system cursor only where it is active */

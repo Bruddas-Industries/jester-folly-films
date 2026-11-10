@@ -69,12 +69,16 @@ async function fromRss() {
   const xml = await res.text();
   const entries = xml.split("<entry>").slice(1);
   if (!entries.length) throw new Error("RSS had no entries");
-  return entries.slice(0, MAX_RECENT).map((e) => ({
-    id: tag(e, "yt:videoId"),
-    title: tag(e, "title"),
-    published: tag(e, "published"),
-    description: tag(e, "media:description"),
-  }));
+  return entries.slice(0, MAX_RECENT).map((e) => {
+    const published = tag(e, "published");
+    return {
+      id: tag(e, "yt:videoId"),
+      title: tag(e, "title"),
+      // Normalised so RSS and watch-page dates sort together.
+      published: published ? new Date(published).toISOString() : "",
+      description: tag(e, "media:description"),
+    };
+  });
 }
 
 /* ---------- Source 2: channel page + watch pages ---------- */

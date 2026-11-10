@@ -89,9 +89,10 @@ export function Hero() {
   const outlineOpacity = useTransform(p, [0, 0.03, 0.9, 1], [0, 0.7, 0.35, 0]);
   const pipOpacity = useTransform(p, [0, 0.025, 0.05], [1, 1, 0]);
 
-  // Inside the iris: a slow dolly-in on the title as it closes.
-  const titleScale = useTransform(scrollYProgress, [0, 0.8], [1, 1.18]);
-  const restOpacity = useTransform(scrollYProgress, [0, 0.18], [1, 0]);
+  // Inside the iris: a slow dolly-in on the title as it closes. With reduced
+  // motion the hero is one static viewport, so none of this scroll-linking applies.
+  const titleScale = useTransform(() => (reduced ? 1 : 1 + 0.18 * Math.min(1, scrollYProgress.get() / 0.8)));
+  const restOpacity = useTransform(() => (reduced ? 1 : Math.max(0, 1 - scrollYProgress.get() / 0.18)));
   const handoff = useTransform(scrollYProgress, [0.72, 1], [0, 1]);
 
   const [line1, line2] = site.wordmark;
