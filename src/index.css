@@ -1,0 +1,218 @@
+@import "tailwindcss";
+
+/* ── Display face: IM Fell English, self-hosted and preloaded (see index.html) ── */
+@font-face {
+  font-family: "IM Fell English";
+  src: url("/fonts/im-fell-english-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IM Fell English";
+  src: url("/fonts/im-fell-english-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+/* Metric-matched fallbacks keep text from jumping when web fonts arrive. */
+@font-face {
+  font-family: "Fell Fallback";
+  src: local("Georgia"), local("Times New Roman");
+  size-adjust: 92%;
+  ascent-override: 95%;
+}
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial"), local("Helvetica");
+  size-adjust: 101%;
+  ascent-override: 88%;
+  descent-override: 22%;
+}
+
+@theme {
+  /* Palette: "The Fool's Iris" */
+  --color-velvet: #1b1121; /* base */
+  --color-velvet-deep: #130c18; /* outside the iris, footer */
+  --color-velvet-raised: #251830; /* raised surfaces */
+  --color-bone: #ece3d2; /* primary text */
+  --color-ash: #9c90a0; /* secondary text (AA on velvet) */
+  --color-oxblood: #8e1f2b; /* motley A */
+  --color-arsenic: #4f8a6e; /* motley B */
+  --color-limelight: #f3d98b; /* projector light: focus, beams, the cursor */
+
+  --font-display: "IM Fell English", "Fell Fallback", Georgia, serif;
+  --font-sans: "Archivo Variable", "Archivo Fallback", system-ui, sans-serif;
+
+  /* Type scale (classic 6–72 progression, extended for title cards) */
+  --text-credit: 0.8125rem; /* 13 */
+  --text-credit--line-height: 1.35;
+  --text-body: 1.125rem; /* 18 */
+  --text-body--line-height: 1.6;
+  --text-lead: 1.375rem; /* 22 */
+  --text-lead--line-height: 1.5;
+  --text-title: 2.25rem; /* 36 */
+  --text-title--line-height: 1.1;
+
+  --ease-iris: cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-velvet);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-size: 100%;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    color-scheme: dark;
+  }
+  body {
+    background: var(--color-velvet);
+    min-height: 100svh;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-limelight);
+    color: var(--color-velvet);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-limelight);
+    outline-offset: 3px;
+  }
+  img {
+    max-width: 100%;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Credits: Archivo condensed, used for metadata and credit blocks */
+.credits {
+  font-stretch: 72%;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* ── Film grain: an oversized noise tile jittered at 12fps ── */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.09;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.5s steps(6) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  17% { transform: translate(-3%, 2%); }
+  33% { transform: translate(2%, -4%); }
+  50% { transform: translate(-4%, -1%); }
+  67% { transform: translate(3%, 3%); }
+  83% { transform: translate(-1%, 4%); }
+  100% { transform: translate(1%, -2%); }
+}
+
+/* Gate weave: the slight drift of film through a projector gate */
+.gate-weave {
+  animation: weave 0.75s steps(9) infinite;
+}
+@keyframes weave {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(0.4px, -0.6px); }
+  40% { transform: translate(-0.5px, 0.3px); }
+  60% { transform: translate(0.3px, 0.7px); }
+  80% { transform: translate(-0.2px, -0.4px); }
+}
+
+/* Harlequin lattice: the motley seen outside the iris */
+.lattice {
+  background-color: var(--color-velvet-deep);
+  background-image:
+    linear-gradient(55deg, transparent 49.6%, rgb(243 217 139 / 0.07) 50%, transparent 50.4%),
+    linear-gradient(-55deg, transparent 49.6%, rgb(243 217 139 / 0.07) 50%, transparent 50.4%);
+  background-size: 84px 120px;
+  background-position: center;
+}
+
+/* Projector beam: light falling from above */
+.beam {
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 0%, rgb(243 217 139 / 0.16), transparent 70%),
+    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgb(10 6 13 / 0.75) 100%),
+    var(--color-velvet);
+}
+
+/* Ticket-shaped call to action. The clip lives on an inner span so the
+   focus outline on the button itself is never clipped. */
+.ticket {
+  display: inline-block;
+  border-radius: 2px;
+}
+.ticket > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.9em 1.9em;
+  clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%);
+  background: var(--color-limelight);
+  color: var(--color-velvet);
+  font-weight: 600;
+  font-stretch: 88%;
+  letter-spacing: 0.01em;
+  transition: background-color 120ms steps(2);
+}
+.ticket:hover > span {
+  background: var(--color-bone);
+}
+.ticket.ticket--ghost > span {
+  background: transparent;
+  color: var(--color-limelight);
+  box-shadow: inset 0 0 0 1px var(--color-limelight);
+  clip-path: none;
+  border-radius: 999px;
+  padding: 0.55em 1.2em;
+}
+.ticket.ticket--ghost:hover > span {
+  background: var(--color-limelight);
+  color: var(--color-velvet);
+}
+
+/* Horizontal scrollers */
+.scroller {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-velvet-raised) transparent;
+  overscroll-behavior-x: contain;
+}
+.scroller > * {
+  scroll-snap-align: start;
+}
+
+/* Custom cursor hides the system cursor only where it is active */
+html.has-custom-cursor,
+html.has-custom-cursor a,
+html.has-custom-cursor button {
+  cursor: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain,
+  .gate-weave {
+    animation: none;
+  }
+  .ticket > span {
+    transition: none;
+  }
+}
