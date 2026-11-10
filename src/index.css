@@ -189,8 +189,33 @@ html.lenis body {
   color: var(--color-velvet);
 }
 
+/* Video thumbnails: muted into the palette, then "advance a frame" on hover */
+.frame-advance {
+  filter: grayscale(0.55) contrast(1.05) brightness(0.9);
+  transition:
+    filter 180ms steps(3),
+    transform 180ms steps(2);
+}
+.frame-wash {
+  opacity: 0.35;
+  transition: opacity 180ms steps(3);
+}
+.group:hover .frame-advance,
+.group:focus-visible .frame-advance {
+  filter: none;
+  transform: scale(1.035);
+}
+.group:hover .frame-wash,
+.group:focus-visible .frame-wash {
+  opacity: 0;
+}
+
 /* Horizontal scrollers */
 .scroller {
+  /* Align the first card with the page container (max-w-7xl + gutter) */
+  --gutter: 1rem;
+  padding-inline: var(--gutter);
+  scroll-padding-inline: var(--gutter);
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
   scrollbar-color: var(--color-velvet-raised) transparent;
@@ -198,6 +223,11 @@ html.lenis body {
 }
 .scroller > * {
   scroll-snap-align: start;
+}
+@media (min-width: 40rem) {
+  .scroller {
+    --gutter: max(2rem, calc((100% - 80rem) / 2 + 2rem));
+  }
 }
 
 /* Custom cursor hides the system cursor only where it is active */

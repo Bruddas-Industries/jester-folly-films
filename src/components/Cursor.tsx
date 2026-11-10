@@ -40,13 +40,26 @@ export function Cursor() {
       setMode("default");
     };
     const leave = () => setMode("hidden");
+    // Iframes swallow pointer events, so hide on the way in rather than waiting for a move.
+    const out = (e: PointerEvent) => {
+      const next = e.relatedTarget as Element | null;
+      if (!next || next.tagName === "IFRAME") setMode("hidden");
+    };
+    // Clicking a video opens the modal under a stationary pointer; drop the "Play" state.
+    const click = (e: MouseEvent) => {
+      if ((e.target as Element | null)?.closest("[data-cursor='play']")) setMode("hidden");
+    };
 
     window.addEventListener("pointermove", move, { passive: true });
+    document.addEventListener("pointerout", out);
+    document.addEventListener("click", click);
     document.addEventListener("pointerleave", leave);
     window.addEventListener("blur", leave);
     return () => {
       root.classList.remove("has-custom-cursor");
       window.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerout", out);
+      document.removeEventListener("click", click);
       document.removeEventListener("pointerleave", leave);
       window.removeEventListener("blur", leave);
     };
