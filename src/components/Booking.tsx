@@ -124,10 +124,13 @@ function CalendlyEmbed({ url }: { url: string }) {
     <div>
       <Frame>
         <div ref={frame} className="relative h-[700px] w-full">
-          <div ref={target} className={`h-full w-full ${state === "failed" ? "hidden" : ""}`} />
+          {/* Sits behind the embed, so the calendar covers it as soon as it paints */}
           {state !== "ready" && state !== "failed" && (
             <p className="credits absolute inset-0 flex items-center justify-center text-ash">Loading calendar…</p>
           )}
+          <div ref={target} className={`relative z-10 h-full w-full ${state === "failed" ? "hidden" : ""}`} />
+          {/* Calendly ships its own spinner; hide it in favour of ours */}
+          <style>{`#book .calendly-spinner{display:none}`}</style>
           {state === "failed" && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-6 text-center">
               <Pip className="!h-8 !w-6" />
