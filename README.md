@@ -1,6 +1,6 @@
 # Jester Folly Films
 
-A one-page preview site for Jester Folly Films, an independent production company making darkly comic short films. It's a look-and-feel prototype: real videos from the YouTube channel, with placeholder copy clearly tagged.
+A one-page site for Jester Folly Films. Jester Folly helps people make movies: free consultations, connecting filmmakers with talented crew, and a growing network of businesses where indie and student productions can film at a low cost. The site also shows the team's own films, pulled from the YouTube channel. Unconfirmed details are clearly tagged as placeholders.
 
 **Stack:** Vite, React, TypeScript, Tailwind CSS 4, Motion, Lenis. Deploys as a static site on Vercel. No environment variables.
 
@@ -21,14 +21,15 @@ All copy lives in **`src/content/site.ts`**. You shouldn't need to touch any com
 |---|---|
 | `tagline` | The line under the title card |
 | `about` | About heading, intro and second paragraph |
-| `services` | The four "what we make" items, each with real example titles |
+| `services` | The "how we help" items (crew, locations, our own films); `examples` is optional |
+| `locations` | The locations section: intro, the filmmaker panel and the business panel |
 | `reel` | Section name ("Shortfalls") and its subtitle |
 | `pinnedVideoIds` | Videos that always show first (see below) |
 | `hiddenVideoIds` | Videos to leave out of the reel |
 | `reelLimit` | How many videos the reel shows |
 | `productions` | Poster row: title, year, genre, logline, poster style, optional video |
 | `booking.calendlyUrl` | Your Calendly event link |
-| `contactEmail`, `social` | Footer and booking contact links |
+| `contactPhone`, `contactEmail`, `social` | Phone, email and social links in the booking section and footer |
 | `showPlaceholderTags` | Set to `false` to hide every "Placeholder" tag at once |
 
 Anything marked `PLACEHOLDER` in that file was written for the prototype and hasn't been confirmed. When you replace it, also set its `placeholder` / `unverified` flag to `false` so its on-page tag disappears.
