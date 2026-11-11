@@ -4,7 +4,8 @@ import { useAnchorClick } from "../lib/smooth-scroll";
 
 const LINKS = [
   { href: "#about", label: "About", desktopOnly: true },
-  { href: "#shortfalls", label: "Shortfalls", desktopOnly: false },
+  { href: "#locations", label: "Locations", desktopOnly: false },
+  { href: "#shortfalls", label: "Shortfalls", desktopOnly: true },
   { href: "#productions", label: "Productions", desktopOnly: true },
 ];
 

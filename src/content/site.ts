@@ -12,8 +12,8 @@
 export type Service = {
   name: string;
   description: string;
-  /** Real videos from the channel that show this kind of work. */
-  examples: string[];
+  /** Optional: real videos from the channel that show this kind of work. */
+  examples?: string[];
 };
 
 export type PosterStyle = "stacked" | "fading" | "waterline" | "askew" | "window";
@@ -44,43 +44,56 @@ export const site = {
   /** The two lines of the hero title card. */
   wordmark: ["Jester", "Folly"] as const,
 
-  // PLACEHOLDER: tagline written for the prototype.
-  tagline: "Short films made with a straight face and a crooked grin.",
+  /** The line under the title card. */
+  tagline: "Making a movie? Tell us what you're missing and we'll help you find it.",
 
   about: {
-    // PLACEHOLDER: intro copy written for the prototype.
-    heading: "Small films about bad ideas",
+    heading: "Let's get your movie made",
     intro:
-      "Jester Folly is an independent production company making short films that start as jokes and end up somewhere stranger: a day care with a demon problem, a sonnet read at a graveside, a girl quietly rotting at the dinner table while her parents fail to notice.",
+      "We love making movies, and we'd love to help you make yours. Tell us what you don't have yet, whether that's a crew, a place to shoot or someone to talk it through with, and we'll help you find it.",
     secondary:
-      "We write, shoot and cut everything ourselves, so a small budget still gets a finished film. Comedy, horror, music videos, and anything that sits awkwardly between them.",
-    placeholder: true,
+      "Mostly, we connect filmmakers with talented crew. Right now we're also building a network of local businesses where indie and student productions can film for less.",
+    placeholder: false,
   },
 
-  // PLACEHOLDER: service names and descriptions. The examples are real channel videos.
+  /** "How we help" list under the About intro. */
   services: [
     {
-      name: "Short films",
+      name: "Crew",
       description:
-        "Horror, comedy and the space in between, from first draft to festival cut.",
+        "We connect filmmakers with talented crew for the roles you can't cover yourself: camera, sound, lighting, editing and more.",
+    },
+    {
+      name: "Locations",
+      description:
+        "A growing network of local businesses that let independent and student productions film on location at a low cost.",
+    },
+    {
+      name: "Our own films",
+      description:
+        "We write, shoot and cut our own short films, and bring what we've learned to yours.",
       examples: ["Rotting Unseen", "The Devil Don't Day Care", "Stuck in Your Head"],
     },
-    {
-      name: "Comedy sketches",
-      description: "Quick, character-driven bits built to be watched twice and sent to a friend.",
-      examples: ["My First Time", "That One Time in Class", "Bored Forever"],
-    },
-    {
-      name: "Music videos",
-      description: "Performance, lyric and narrative videos for bands and solo artists.",
-      examples: ["Car Radio fan video", "4 Cords lyric video", "Diamonds cover"],
-    },
-    {
-      name: "Branded & commissioned work",
-      description: "Commercials and promo pieces for schools, events and small businesses.",
-      examples: ["Year Book Commercial"],
-    },
   ] satisfies Service[],
+
+  /** The locations network: one call to action for filmmakers, one for businesses. */
+  locations: {
+    heading: "Film on location for less",
+    intro:
+      "Locations are our big focus right now. We're building a network of businesses that let indie and student filmmakers shoot on their premises at a low cost.",
+    filmmakers: {
+      title: "Need a location?",
+      text: "Tell us what your script calls for and we'll look for a match in the network.",
+      cta: "Book a free consultation",
+    },
+    businesses: {
+      title: "Have a space?",
+      text: "Open your business to student and indie productions. Tell us when it's free and we'll introduce you to filmmakers who need it.",
+      cta: "Add your business",
+      /** Subject line for the email the button starts. */
+      emailSubject: "Adding my business to the locations network",
+    },
+  },
 
   reel: {
     heading: "Shortfalls",
@@ -156,10 +169,9 @@ export const site = {
   ] satisfies Production[],
 
   booking: {
-    heading: "Book a call",
-    // PLACEHOLDER: booking copy.
+    heading: "Book a free consultation",
     intro:
-      "Have a script, a song or a strange idea? Pick a time and we'll talk it through. Calls are free and take about 30 minutes.",
+      "Call or book a free consultation with the movie men. Tell us about your movie and what you don't have yet, and let's see how we can help.",
     /**
      * PLACEHOLDER: replace with the real Calendly event link, e.g.
      *   "https://calendly.com/jesterfolly/30min"
@@ -171,6 +183,14 @@ export const site = {
   contactEmail: {
     // PLACEHOLDER: not a confirmed address.
     address: "hello@jesterfollyfilms.com",
+    placeholder: true,
+  },
+
+  contactPhone: {
+    // PLACEHOLDER: a fictional 555 number. Replace with the real one.
+    display: "(555) 555-0142",
+    /** Digits for the tel: link, with country code. */
+    tel: "+15555550142",
     placeholder: true,
   },
 

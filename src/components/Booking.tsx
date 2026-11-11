@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { site } from "../content/site";
 import { fadeIn, frameIn, stagger } from "../lib/motion";
-import { Pip, PlaceholderTag, SectionHeading } from "./ui";
+import { Frame, Pip, PlaceholderTag, SectionHeading } from "./ui";
 
 declare global {
   interface Window {
@@ -27,34 +27,46 @@ export function Booking() {
   const item = reduced ? fadeIn : frameIn;
   const { heading, intro, calendlyUrl } = site.booking;
   const email = site.contactEmail;
+  const phone = site.contactPhone;
 
   return (
     <section id="book" aria-labelledby="book-title" className="relative scroll-mt-16 bg-velvet-deep py-28 sm:py-36">
-      <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-8 lg:grid-cols-12 lg:gap-10">
+      <div className="mx-auto grid max-w-7xl gap-y-8 px-4 sm:px-8 lg:grid-cols-12 lg:gap-x-10 lg:gap-y-14">
+        <SectionHeading id="book-title" title={heading} className="lg:col-span-10" />
         <div className="lg:col-span-4">
-          <SectionHeading id="book-title" title={heading} />
           <motion.div variants={stagger(0.12)} initial="hidden" whileInView="show" viewport={{ once: true }}>
-            <motion.p variants={item} className="text-lead mt-8 max-w-[36ch] text-bone/85">
+            <motion.p variants={item} className="text-lead max-w-[36ch] text-bone/85">
               {intro}
             </motion.p>
-            <motion.p variants={item} className="text-body mt-8 text-bone/75">
-              Prefer email?{" "}
-              <a
-                href={`mailto:${email.address}`}
-                className="text-limelight underline decoration-limelight/40 underline-offset-4 hover:decoration-limelight"
-              >
-                {email.address}
-              </a>
-            </motion.p>
-            {email.placeholder && (
+            <motion.dl variants={item} className="text-body mt-8 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-bone/75">
+              <dt>Call</dt>
+              <dd>
+                <a href={`tel:${phone.tel}`} className={contactLink}>
+                  {phone.display}
+                </a>
+              </dd>
+              <dt>Email</dt>
+              <dd className="[overflow-wrap:anywhere]">
+                <a href={`mailto:${email.address}`} className={contactLink}>
+                  {email.address}
+                </a>
+              </dd>
+            </motion.dl>
+            {(phone.placeholder || email.placeholder) && (
               <motion.p variants={item} className="mt-3">
-                <PlaceholderTag>Email address not confirmed</PlaceholderTag>
+                <PlaceholderTag>
+                  {phone.placeholder && email.placeholder
+                    ? "Phone and email not confirmed"
+                    : phone.placeholder
+                      ? "Phone number not confirmed"
+                      : "Email address not confirmed"}
+                </PlaceholderTag>
               </motion.p>
             )}
           </motion.div>
         </div>
 
-        <div className="lg:col-span-8 lg:col-start-5">
+        <div className="mt-6 lg:col-span-8 lg:col-start-5 lg:mt-0">
           {calendlyUrl ? <CalendlyEmbed url={calendlyUrl} /> : <CalendlyPlaceholder />}
         </div>
       </div>
@@ -62,7 +74,9 @@ export function Booking() {
   );
 }
 
-type LoadState = "idle" | "loading" | "ready" | "failed";
+const contactLink = "text-limelight underline decoration-limelight/40 underline-offset-4 hover:decoration-limelight";
+
+type LoadState ="idle" | "loading" | "ready" | "failed";
 
 /** Loads Calendly's script only when the section is near the viewport. */
 function CalendlyEmbed({ url }: { url: string }) {
@@ -182,16 +196,3 @@ function CalendlyPlaceholder() {
   );
 }
 
-/** A projection frame: limelight corner marks around the embed. */
-function Frame({ children }: { children: React.ReactNode }) {
-  const corner = "absolute h-6 w-6 border-limelight";
-  return (
-    <div className="relative bg-velvet p-3 sm:p-5">
-      <span aria-hidden className={`${corner} top-0 left-0 border-t border-l`} />
-      <span aria-hidden className={`${corner} top-0 right-0 border-t border-r`} />
-      <span aria-hidden className={`${corner} bottom-0 left-0 border-b border-l`} />
-      <span aria-hidden className={`${corner} right-0 bottom-0 border-r border-b`} />
-      {children}
-    </div>
-  );
-}

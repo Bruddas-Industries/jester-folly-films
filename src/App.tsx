@@ -3,6 +3,7 @@ import { SmoothScrollProvider } from "./lib/smooth-scroll";
 import { Nav } from "./components/Nav";
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
+import { Locations } from "./components/Locations";
 import { Reel } from "./components/Reel";
 import { Productions } from "./components/Productions";
 import { Booking } from "./components/Booking";
@@ -25,6 +26,7 @@ export default function App() {
           <Hero />
           <main id="main" tabIndex={-1} className="outline-none">
             <About />
+            <Locations />
             <Reel />
             <Productions />
             <Booking />

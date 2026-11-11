@@ -24,6 +24,20 @@ export function PlaceholderTag({ children = "Placeholder", className = "" }: { c
   );
 }
 
+/** A viewfinder: limelight corner marks around a block (the booking embed, the locations panels). */
+export function Frame({ children, className = "bg-velvet p-3 sm:p-5" }: { children: ReactNode; className?: string }) {
+  const corner = "absolute h-6 w-6 border-limelight";
+  return (
+    <div className={`relative ${className}`}>
+      <span aria-hidden className={`${corner} top-0 left-0 border-t border-l`} />
+      <span aria-hidden className={`${corner} top-0 right-0 border-t border-r`} />
+      <span aria-hidden className={`${corner} bottom-0 left-0 border-b border-l`} />
+      <span aria-hidden className={`${corner} right-0 bottom-0 border-r border-b`} />
+      {children}
+    </div>
+  );
+}
+
 const IRIS_CLOSED = "polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)";
 const IRIS_OPEN = "polygon(50% -150%, 150% 50%, 50% 250%, -50% 50%)";
 

@@ -144,7 +144,7 @@ export function Hero() {
               >
                 <p className="text-lead max-w-[30ch] text-balance text-bone/85">{site.tagline}</p>
                 <a href="#book" onClick={onAnchor} className="ticket" tabIndex={phase === "settled" ? 0 : -1}>
-                  <span>Book a call</span>
+                  <span>Book a free consultation</span>
                 </a>
               </motion.div>
             </motion.div>

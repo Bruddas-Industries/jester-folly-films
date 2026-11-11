@@ -12,11 +12,12 @@ export function Footer() {
   const rows: { role: string; items: { label: string; href: string; placeholder: boolean; external?: boolean }[] }[] = [
     { role: "Watch", items: youtube ? [{ ...youtube, label: "YouTube", external: true }] : [] },
     { role: "Follow", items: others.map((s) => ({ ...s, external: true })) },
+    { role: "Call", items: [{ label: site.contactPhone.display, href: `tel:${site.contactPhone.tel}`, placeholder: site.contactPhone.placeholder }] },
     {
       role: "Write",
       items: [{ label: site.contactEmail.address, href: `mailto:${site.contactEmail.address}`, placeholder: site.contactEmail.placeholder }],
     },
-    { role: "Book", items: [{ label: "A call", href: "#book", placeholder: false }] },
+    { role: "Book", items: [{ label: "A free consultation", href: "#book", placeholder: false }] },
   ];
 
   return (
